@@ -1,17 +1,14 @@
-import { useState } from 'react';
 import { 
     StyleSheet,
     Text,
     View,
-    TextInput,
     Button,
     Modal,
-    Image,
     Alert
 } from 'react-native';
 
 
-export default function Goal({handleUpdate, handleDelete, goal, itemModel, setItemModel}) {
+export default function Goal({ onUpdate, handleDelete, goal, itemModel, setItemModel}) {
   
   const onDelete = (key)=>{
     Alert.alert(
@@ -41,7 +38,7 @@ export default function Goal({handleUpdate, handleDelete, goal, itemModel, setIt
           </View>
          <View style={styles.buttonContainer}>
             <View style={styles.button}>
-              <Button onPress={()=>{handleUpdate(goal),setItemModel(!itemModel)}} title="Update" />
+              <Button onPress={()=>{ onUpdate(goal),setItemModel(!itemModel)}} title="Update" />
             </View>
             <View style={styles.button}>
               <Button color="#ff5c5c" onPress={()=>{ onDelete(goal.key)}}  title="Delete" />

@@ -9,7 +9,7 @@ import {
     Alert
 } from 'react-native';
 
-export default function GoalInput({addGoalHandler, setModal, modal, updatedGoal, makeupdate}) {
+export default function GoalInput({addGoalHandler, setModal, modal, updatedGoal, handleUpdate}) {
 
 
 const [text, setText] = useState(updatedGoal?updatedGoal.title:'')
@@ -30,7 +30,7 @@ const handlePress = (key) =>{
   if(!description) { Alert.alert('Required','Description is required')
   return;}
   
-  if(updatedGoal)handleUpdate(key)
+  if(updatedGoal)initiateUpdate(key)
   else handleGoal()
 }
   
@@ -40,8 +40,8 @@ const handleGoal = ()=>{
   setDescription("")
 }
 
-const handleUpdate = (key)=>{
-  makeupdate(text, description, key)
+const initiateUpdate = (key)=>{
+  handleUpdate(text, description, key)
   setText("")   
   setDescription("")
 }
@@ -52,16 +52,19 @@ console.log(updatedGoal)
   <Modal visible={modal} >
     <View style={styles.inputContainer} >
         <Text style={styles.textTitle} >Add Details...</Text>
-         <View style={styles.textInput}><TextInput value={text}  onChangeText={goalTextHandler}  placeholder='Task'></TextInput></View>
-        <View style={styles.textInputDesc}><TextInput value={description}  onChangeText={goalDescriptionHandler} multiline={true} placeholder='Description' ></TextInput></View>
+         <View style={styles.textInput}>
+          <TextInput value={text}  onChangeText={goalTextHandler}  placeholder='Task'></TextInput>
+        </View>
+        <View style={styles.textInputDesc}>
+          <TextInput value={description}  onChangeText={goalDescriptionHandler} multiline={true} placeholder='Description' ></TextInput>
+        </View>
         
         <View style={styles.buttonContainer}>
-          
-        <View style={styles.button}>
-            <Button onPress={()=>setModal(!modal)}  title="Close" />
+          <View style={styles.button}>
+              <Button onPress={()=>setModal(!modal)}  title="Close" />
           </View>
           <View style={styles.button}> 
-            <Button onPress={()=>handlePress(updatedGoal?updatedGoal.key:'',updatedGoal)} title={updatedGoal?"Update ":"Add "} />
+              <Button onPress={()=>handlePress(updatedGoal?updatedGoal.key:'',updatedGoal)} title={updatedGoal?"Update ":"Add "} />
           </View>
         </View>
     </View>

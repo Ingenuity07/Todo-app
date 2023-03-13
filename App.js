@@ -10,9 +10,6 @@ import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
 
 
-
-
-
 export default function App() {
   
   const [goal,setGoal] = useState([
@@ -35,34 +32,37 @@ export default function App() {
     setModal(!modal)
   }
   
-  const handleUpdate = (goal) =>{
+  const onUpdate = (goal) =>{
     setUpdatedGoal(goal)
     setModal(!modal)
   }
   
-  const makeupdate = (text,description,key)=>{
-    setGoal(goal.map((item )=> { if (item.key===key) return {title:text, description:description,key :key} ; return item }))
+  const handleUpdate = (text,description,key)=>{
+    setGoal(goal.map((item )=> { 
+      if (item.key===key) 
+        return {title:text, description:description,key :key} 
+        return item 
+      }))
     console.log("Added", goal)
     setModal(!modal)
   }
   
   return (
-   <>
+  <>
     <StatusBar style='light' />
-    
     <View style={styles.appContainer}>
     <Button title='Add goal' onPress={()=>{setModal(!modal),setUpdatedGoal('')}}  />
-      {modal && <GoalInput addGoalHandler={addGoalHandler} setModal={setModal} modal={modal} updatedGoal={updatedGoal} makeupdate={makeupdate}/>}
+      {modal && <GoalInput addGoalHandler={addGoalHandler} setModal={setModal} modal={modal} updatedGoal={updatedGoal} handleUpdate={handleUpdate}/>}
       <View style={styles.goalsContainer}>
         <Text>List of Tasks...</Text>
         <FlatList data={goal}
           keyExtractor={item => item.key}
           alwaysBounceVertical={false} 
-          renderItem = {(itemData)=> <GoalItem handleUpdate={handleUpdate} handleDelete={handleDelete} goal={itemData.item} /> }  
+          renderItem = {(itemData)=> <GoalItem  onUpdate={ onUpdate} handleDelete={handleDelete} goal={itemData.item} /> }  
         />
       </View>
     </View>
-    </>
+  </>
   );
 }
 
